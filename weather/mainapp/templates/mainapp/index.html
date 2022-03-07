@@ -1,0 +1,69 @@
+{%  load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static '/css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Прогноз погоды</title>
+</head>
+<body>
+
+   <div class="wrapper">
+       <div class="content">
+           <div class="header">
+               <div class="header__text">Погода  в любом городе!</div>
+           </div>
+           <div class="home">
+               <div class="container">
+                   <div class="home__row">
+                       <div class="home__form">
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                <input class = 'form_input' name = "city" type = "text" placeholder = "Пожалуйста, введите город">
+                                <button type = "submit" class="form_btn">Показать</button>
+                            </form>
+                       </div>
+                       <div class="home__answer">
+                          <div class="answer__icon"><img src={{context.icons}} alt=""></div>
+                          <div class="answer__city">{{context.city}}</div>
+                       </div>
+                       <div class="answer__body">
+                        <div class="answer__description">В городе {{context.description}}</div>
+                        <div class="answer__main-temp"> Температура воздуха {{context.temp}} °С</div>
+                        <div class="answer__main-feels-like">По ощущениям {{context.feels_like}} °С</div>
+                        <div class="answer__main-pressure">Атмосферное давление {{context.pressure}} мм рт. ст.</div>
+                        <div class="answer__main-humidity">Влажность {{context.humidity}} %</div>
+                        <div class="answer__wind-speed">Скорость ветра {{context.speed}} м/с </div>
+                        <div class="answer__wind-deg">Направление ветра {{context.deg}}</div>
+                        <div class="answer__dt">Время расчета данных {{context.dt}} по мест.</div>
+                    </div>
+                    <div id="current_time"></div>
+                   </div>
+               </div>         
+           </div>
+           
+       </div>
+       <div class="footer">Автор: Стукун Кристина</div>
+   </div>
+
+   <script type="text/javascript">
+    function getDate()
+    {
+        var date = new Date();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        if(seconds < 10)
+        {
+            seconds = '0' + seconds;
+        }
+        document.getElementById('current_time').innerHTML = 'Текущее время: '+ hours + ':' + minutes + ':' + seconds;
+    }
+    setInterval(getDate, 0);
+    </script>
+</body>
+</html>
